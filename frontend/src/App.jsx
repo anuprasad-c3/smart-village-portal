@@ -1,14 +1,26 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <div className="min-h-screen bg-blue-100 flex items-center justify-center">
-      <h1 className="text-5xl font-bold text-blue-800">
-        Smart Panchayat Portal
-      </h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+
+        <Route path="/" element={<Home />} />
+
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
+
+        <Route path="*" element={<NotFound />} />
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
-

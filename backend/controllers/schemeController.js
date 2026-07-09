@@ -64,18 +64,69 @@ module.exports = {
   createScheme,
 };
 
-
-// Get All Schemes
+// Get All Schemes with Search, Filter & Pagination
 const getAllSchemes = async (req, res) => {
   try {
-    const schemes = await Scheme.find().sort({ createdAt: -1 });
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const skip = (page - 1) * limit;
+
+    const filter = {};
+
+    // Search by title, category or department
+    if (req.query.search) {
+      filter.$or = [
+        {
+          title: {
+            $regex: req.query.search,
+            $options: "i",
+          },
+        },
+        {
+          category: {
+            $regex: req.query.search,
+            $options: "i",
+          },
+        },
+        {
+          department: {
+            $regex: req.query.search,
+            $options: "i",
+          },
+        },
+      ];
+    }
+
+    // Filter by category
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
+
+    // Filter by status
+    if (req.query.status) {
+      filter.status = req.query.status;
+    }
+
+    const totalSchemes = await Scheme.countDocuments(filter);
+
+    const schemes = await Scheme.find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     res.status(200).json({
       success: true,
-      count: schemes.length,
+
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(totalSchemes / limit),
+        totalSchemes,
+        limit,
+      },
+
       data: schemes,
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -87,7 +138,6 @@ const getAllSchemes = async (req, res) => {
 // Get Scheme by ID
 const getSchemeById = async (req, res) => {
   try {
-
     const scheme = await Scheme.findById(req.params.id);
 
     if (!scheme) {
@@ -101,7 +151,6 @@ const getSchemeById = async (req, res) => {
       success: true,
       data: scheme,
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -113,15 +162,10 @@ const getSchemeById = async (req, res) => {
 // Update Scheme
 const updateScheme = async (req, res) => {
   try {
-
-    const scheme = await Scheme.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    const scheme = await Scheme.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!scheme) {
       return res.status(404).json({
@@ -135,7 +179,6 @@ const updateScheme = async (req, res) => {
       message: "Scheme updated successfully",
       data: scheme,
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -147,7 +190,6 @@ const updateScheme = async (req, res) => {
 // Delete Scheme
 const deleteScheme = async (req, res) => {
   try {
-
     const scheme = await Scheme.findById(req.params.id);
 
     if (!scheme) {
@@ -163,7 +205,6 @@ const deleteScheme = async (req, res) => {
       success: true,
       message: "Scheme deleted successfully",
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
