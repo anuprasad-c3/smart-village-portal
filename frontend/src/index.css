@@ -1,2 +1,38 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #1e40af; /* Deep institutional blue */
+  --color-primary-hover: #1e3a8a;
+  --color-secondary: #0f766e;
+  --font-sans: "Inter", sans-serif;
+  
+  --color-background: #f9fafb;
+  --color-surface: #ffffff;
+}
+
+@layer base {
+  body {
+    @apply bg-[#f9fafb] text-gray-900 antialiased font-sans;
+  }
+}
+
+@layer utilities {
+  .solid-card {
+    @apply bg-white border border-gray-200 shadow-sm rounded-lg transition-all duration-200;
+  }
+  
+  .solid-card:hover {
+    @apply shadow-md border-gray-300;
+  }
+
+  .text-heading {
+    @apply text-gray-900 font-bold tracking-tight;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
