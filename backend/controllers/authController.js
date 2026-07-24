@@ -4,7 +4,18 @@ const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   try {
-    const { fullName, email, password, phone, address } = req.body;
+    const {
+  fullName,
+  email,
+  password,
+  phone,
+  address,
+  district,
+  panchayat,
+  gender,
+  dob,
+  occupation,
+} = req.body;
 
     // Validation
     if (!fullName || !email || !password || !phone || !address) {
@@ -29,22 +40,35 @@ const register = async (req, res) => {
 
     // Save user
     const user = await User.create({
-      fullName,
-      email,
-      password: hashedPassword,
-      phone,
-      address,
-    });
+  fullName,
+  email,
+  password: hashedPassword,
+  phone,
+  address,
+  district,
+  panchayat,
+  gender,
+  dob,
+  occupation,
+});
 
     res.status(201).json({
       success: true,
       message: "Registration successful",
       user: {
-        id: user._id,
-        fullName: user.fullName,
-        email: user.email,
-        role: user.role,
-      },
+  id: user._id,
+  fullName: user.fullName,
+  email: user.email,
+  phone: user.phone,
+  address: user.address,
+  district: user.district,
+  panchayat: user.panchayat,
+  gender: user.gender,
+  dob: user.dob,
+  occupation: user.occupation,
+  profileImage: user.profileImage,
+  role: user.role,
+},
     });
 
   } catch (error) {
@@ -105,11 +129,19 @@ const login = async (req, res) => {
       message: "Login Successful",
       token,
       user: {
-        id: user._id,
-        fullName: user.fullName,
-        email: user.email,
-        role: user.role,
-      },
+  id: user._id,
+  fullName: user.fullName,
+  email: user.email,
+  phone: user.phone,
+  address: user.address,
+  district: user.district,
+  panchayat: user.panchayat,
+  gender: user.gender,
+  dob: user.dob,
+  occupation: user.occupation,
+  profileImage: user.profileImage,
+  role: user.role,
+},
     });
 
   } catch (error) {
@@ -120,15 +152,8 @@ const login = async (req, res) => {
   }
 };
 
-const profile = async (req, res) => {
-  res.status(200).json({
-    success: true,
-    user: req.user,
-  });
-};
 
 module.exports = {
   register,
   login,
-  profile,
 };

@@ -1,6 +1,8 @@
 const Scheme = require("../models/Scheme");
 
+// =========================
 // Create Scheme
+// =========================
 const createScheme = async (req, res) => {
   try {
     const {
@@ -17,7 +19,6 @@ const createScheme = async (req, res) => {
       status,
     } = req.body;
 
-    // Validation
     if (
       !title ||
       !category ||
@@ -60,11 +61,9 @@ const createScheme = async (req, res) => {
   }
 };
 
-module.exports = {
-  createScheme,
-};
-
-// Get All Schemes with Search, Filter & Pagination
+// =========================
+// Get All Schemes
+// =========================
 const getAllSchemes = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -74,7 +73,7 @@ const getAllSchemes = async (req, res) => {
 
     const filter = {};
 
-    // Search by title, category or department
+    // Search
     if (req.query.search) {
       filter.$or = [
         {
@@ -98,14 +97,23 @@ const getAllSchemes = async (req, res) => {
       ];
     }
 
-    // Filter by category
+    // Category Filter
     if (req.query.category) {
       filter.category = req.query.category;
     }
 
-    // Filter by status
+    // Status Filter
     if (req.query.status) {
-      filter.status = req.query.status;
+      const today = new Date();
+
+      if (req.query.status === "Active") {
+        filter.status = "Active";
+        filter.lastDate = { $gte: today };
+      } else if (req.query.status === "Expired") {
+        filter.lastDate = { $lt: today };
+      } else {
+        filter.status = req.query.status;
+      }
     }
 
     const totalSchemes = await Scheme.countDocuments(filter);
@@ -115,17 +123,29 @@ const getAllSchemes = async (req, res) => {
       .skip(skip)
       .limit(limit);
 
+    // Automatically update display status
+    const updatedSchemes = schemes.map((scheme) => {
+      const obj = scheme.toObject();
+
+      if (
+        obj.status === "Active" &&
+        new Date(obj.lastDate) < new Date()
+      ) {
+        obj.status = "Expired";
+      }
+
+      return obj;
+    });
+
     res.status(200).json({
       success: true,
-
       pagination: {
         currentPage: page,
         totalPages: Math.ceil(totalSchemes / limit),
         totalSchemes,
         limit,
       },
-
-      data: schemes,
+      data: updatedSchemes,
     });
   } catch (error) {
     res.status(500).json({
@@ -135,7 +155,9 @@ const getAllSchemes = async (req, res) => {
   }
 };
 
-// Get Scheme by ID
+// =========================
+// Get Scheme By ID
+// =========================
 const getSchemeById = async (req, res) => {
   try {
     const scheme = await Scheme.findById(req.params.id);
@@ -147,9 +169,18 @@ const getSchemeById = async (req, res) => {
       });
     }
 
+    const schemeData = scheme.toObject();
+
+    if (
+      schemeData.status === "Active" &&
+      new Date(schemeData.lastDate) < new Date()
+    ) {
+      schemeData.status = "Expired";
+    }
+
     res.status(200).json({
       success: true,
-      data: scheme,
+      data: schemeData,
     });
   } catch (error) {
     res.status(500).json({
@@ -159,13 +190,19 @@ const getSchemeById = async (req, res) => {
   }
 };
 
+// =========================
 // Update Scheme
+// =========================
 const updateScheme = async (req, res) => {
   try {
-    const scheme = await Scheme.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const scheme = await Scheme.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     if (!scheme) {
       return res.status(404).json({
@@ -187,7 +224,9 @@ const updateScheme = async (req, res) => {
   }
 };
 
+// =========================
 // Delete Scheme
+// =========================
 const deleteScheme = async (req, res) => {
   try {
     const scheme = await Scheme.findById(req.params.id);

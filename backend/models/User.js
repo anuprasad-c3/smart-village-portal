@@ -36,6 +36,37 @@ const userSchema = new mongoose.Schema(
       enum: ["citizen", "admin"],
       default: "citizen",
     },
+
+    profileImage: {
+      type: String,
+      default: "",
+    },
+
+    district: {
+      type: String,
+      default: "",
+    },
+
+    panchayat: {
+      type: String,
+      default: "",
+    },
+
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Other"],
+      default: "Other",
+    },
+
+    dob: {
+      type: Date,
+      default: null,
+    },
+
+    occupation: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

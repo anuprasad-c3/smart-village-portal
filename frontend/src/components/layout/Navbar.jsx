@@ -39,10 +39,10 @@ function Navbar() {
         {/* Logo Section */}
         <Link to="/" className="flex flex-col">
           <span className="text-2xl font-black text-blue-900 tracking-tight uppercase">
-            Smart Panchayat
+            JanaSeva Portal
           </span>
           <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">
-            Government of India
+            Government of Kerala
           </span>
         </Link>
 
@@ -50,7 +50,8 @@ function Navbar() {
         <div className="hidden items-center gap-6 md:flex">
           {navLink("/", "home")}
           {navLink("/schemes", "schemes")}
-          {navLink("/help", "localHelp")}
+          {navLink("/help", "Help")}
+          {navLink("/updates", "Updates")}
 
           <div className="h-6 w-px bg-gray-300 mx-2"></div>
 
@@ -117,6 +118,7 @@ function Navbar() {
             {navLink("/", "home")}
             {navLink("/schemes", "schemes")}
             {navLink("/help", "localHelp")}
+            {navLink("/updates", "updates")}
 
             {user ? (
               <>

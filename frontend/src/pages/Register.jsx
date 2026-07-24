@@ -11,6 +11,7 @@ import { useLanguage } from "../context/LanguageContext";
 
 function RegisterForm() {
   const { t } = useLanguage();
+
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -18,11 +19,15 @@ function RegisterForm() {
     phone: "",
     address: "",
   });
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -44,8 +49,13 @@ function RegisterForm() {
     <PageLayout>
       <div className="mx-auto max-w-lg px-6 py-16">
         <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-          <h1 className="text-2xl font-bold text-gray-900">{t("createAccount")}</h1>
-          <p className="mt-2 text-gray-500">Register as a citizen to apply for welfare schemes</p>
+          <h1 className="text-2xl font-bold text-gray-900">
+            {t("createAccount")}
+          </h1>
+
+          <p className="mt-2 text-gray-500">
+            Register to access Panchayat welfare services.
+          </p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5">
             <Input
@@ -53,7 +63,7 @@ function RegisterForm() {
               name="fullName"
               value={form.fullName}
               onChange={handleChange}
-              placeholder="Your full name"
+              placeholder="Enter your full name"
               required
             />
 
@@ -84,7 +94,7 @@ function RegisterForm() {
               name="phone"
               value={form.phone}
               onChange={handleChange}
-              placeholder="10-digit mobile number"
+              placeholder="Enter mobile number"
               required
             />
 
@@ -93,19 +103,26 @@ function RegisterForm() {
               name="address"
               value={form.address}
               onChange={handleChange}
-              placeholder="Your village address"
+              placeholder="Enter your address"
               rows={3}
               required
             />
 
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Creating account..." : t("register")}
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading}
+            >
+              {loading ? "Creating Account..." : t("register")}
             </Button>
           </form>
 
           <p className="mt-6 text-center text-sm text-gray-500">
             {t("alreadyHaveAccount")}{" "}
-            <Link to="/login" className="font-medium text-blue-600 hover:underline">
+            <Link
+              to="/login"
+              className="font-medium text-blue-600 hover:underline"
+            >
               {t("loginHere")}
             </Link>
           </p>

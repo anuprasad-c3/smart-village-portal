@@ -17,29 +17,37 @@ import ManageSchemes from "./pages/admin/ManageSchemes";
 import ManageApplications from "./pages/admin/ManageApplications";
 import LocalHelp from "./pages/LocalHelp";
 import NotFound from "./pages/NotFound";
+import Updates from "./pages/Updates";
+import ManageUpdates from "./pages/admin/ManageUpdate";
 
 function App() {
   return (
     <AuthProvider>
       <LanguageProvider>
         <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/schemes" element={<Schemes />} />
-          <Route path="/schemes/:id" element={<SchemeDetail />} />
-          <Route path="/schemes/:id/apply" element={<ApplyScheme />} />
-          <Route path="/dashboard" element={<CitizenDashboard />} />
-          <Route path="/my-applications" element={<MyApplications />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/schemes" element={<ManageSchemes />} />
-          <Route path="/admin/applications" element={<ManageApplications />} />
-          <Route path="/help" element={<LocalHelp />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Toaster position="top-right" />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/schemes" element={<Schemes />} />
+            <Route path="/schemes/:id" element={<SchemeDetail />} />
+            <Route path="/schemes/:id/apply" element={<ApplyScheme />} />
+            <Route path="/dashboard" element={<CitizenDashboard />} />
+            <Route path="/my-applications" element={<MyApplications />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/schemes" element={<ManageSchemes />} />
+            <Route
+              path="/admin/applications"
+              element={<ManageApplications />}
+            />
+            <Route path="/help" element={<LocalHelp />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/updates" element={<Updates />} />
+
+            <Route path="/admin/updates" element={<ManageUpdates />} />
+          </Routes>
+          <Toaster position="top-right" />
         </BrowserRouter>
       </LanguageProvider>
     </AuthProvider>

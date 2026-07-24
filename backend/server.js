@@ -7,6 +7,9 @@ const schemeRoutes = require("./routes/schemeRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
 const path = require("path");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const updateRoutes = require("./routes/updateRoutes");
+const profileRoutes = require("./routes/profileRoutes");
+const appointmentRoutes = require("./routes/appointmentRoutes");
 
 dotenv.config();
 connectDB();
@@ -30,7 +33,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/schemes", schemeRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/dashboard", dashboardRoutes);
-
+app.use("/api/updates", updateRoutes);
+app.use("/api/profile", profileRoutes);
+app.use("/api/appointments", appointmentRoutes);
 // Global Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);

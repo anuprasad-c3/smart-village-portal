@@ -40,6 +40,12 @@ export function AuthProvider({ children }) {
             phone: res.data.user.phone,
             address: res.data.user.address,
             role: res.data.user.role,
+            profileImage: res.data.user.profileImage,
+            district: res.data.user.district,
+            panchayat: res.data.user.panchayat,
+            gender: res.data.user.gender,
+            dob: res.data.user.dob,
+            occupation: res.data.user.occupation,
           };
           localStorage.setItem("user", JSON.stringify(userData));
           setUser(userData);

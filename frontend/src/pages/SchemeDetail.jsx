@@ -61,6 +61,8 @@ function SchemeDetail() {
   }
 
   const expired = isPastDate(scheme.lastDate);
+  const displayStatus =
+  expired ? "Expired" : scheme.status;
   const canApply = scheme.status === "Active" && !expired;
 
   return (
@@ -81,7 +83,7 @@ function SchemeDetail() {
                 <p className="mt-2 text-gray-500">{scheme.department}</p>
               )}
             </div>
-            <StatusBadge status={scheme.status} />
+            <StatusBadge status={displayStatus} />
           </div>
 
           <p className="mt-6 text-gray-700 leading-relaxed">{scheme.description}</p>

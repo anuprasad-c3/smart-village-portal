@@ -14,6 +14,7 @@ import Spinner from "../../components/ui/Spinner";
 import Button from "../../components/ui/Button";
 import ProtectedRoute from "../../components/auth/ProtectedRoute";
 import { dashboardService } from "../../services/dashboardService";
+import { FiBell } from "react-icons/fi";
 
 function AdminDashboardContent() {
   const [stats, setStats] = useState(null);
@@ -53,7 +54,13 @@ function AdminDashboardContent() {
             <div className="mt-10 flex flex-wrap gap-4">
               <Link to="/admin/schemes">
                 <Button>Manage Schemes</Button>
-              </Link>
+                </Link>
+                 <Link to="/admin/updates">
+    <Button variant="outline">
+      <FiBell className="mr-2" />
+      Manage Updates
+    </Button>
+  </Link>
               <Link to="/admin/applications">
                 <Button variant="outline">Review Applications</Button>
               </Link>
