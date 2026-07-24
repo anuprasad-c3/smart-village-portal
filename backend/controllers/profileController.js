@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const fs = require("fs");
+const path = require("path");
 
 // Get Logged-in User Profile
 const getProfile = async (req, res) => {
@@ -55,7 +57,6 @@ const updateProfile = async (req, res) => {
       message: "Profile updated successfully",
       user,
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -78,10 +79,7 @@ const changePassword = async (req, res) => {
 
     const user = await User.findById(req.user._id);
 
-    const isMatch = await bcrypt.compare(
-      currentPassword,
-      user.password
-    );
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
 
     if (!isMatch) {
       return res.status(400).json({
@@ -98,7 +96,58 @@ const changePassword = async (req, res) => {
       success: true,
       message: "Password changed successfully",
     });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
+// Upload Profile Photo
+const uploadProfilePhoto = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Please upload an image",
+      });
+    }
+
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Delete old image if it exists
+    if (user.profileImage) {
+      const oldImagePath = path.join(
+        __dirname,
+        "..",
+        "uploads",
+        "profiles",
+        path.basename(user.profileImage),
+      );
+
+      if (fs.existsSync(oldImagePath)) {
+        fs.unlinkSync(oldImagePath);
+      }
+    }
+
+    // Save new image path
+    user.profileImage = `/uploads/profiles/${req.file.filename}`;
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Profile photo uploaded successfully",
+      profileImage: user.profileImage,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -111,4 +160,5 @@ module.exports = {
   getProfile,
   updateProfile,
   changePassword,
+  uploadProfilePhoto,
 };

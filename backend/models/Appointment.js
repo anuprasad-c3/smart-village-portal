@@ -8,29 +8,9 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
     },
 
-    department: {
-      type: String,
-      required: true,
-      enum: [
-        "Secretary",
-        "Revenue",
-        "Agriculture",
-        "Health",
-        "Welfare",
-        "Tax",
-        "Birth Certificate",
-        "Death Certificate",
-        "Building Permit",
-      ],
-    },
-
-    appointmentDate: {
-      type: Date,
-      required: true,
-    },
-
-    timeSlot: {
-      type: String,
+    slot: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Slot",
       required: true,
     },
 
@@ -42,7 +22,13 @@ const appointmentSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["Pending", "Approved", "Rejected", "Completed", "Cancelled"],
+      enum: [
+        "Pending",
+        "Approved",
+        "Rejected",
+        "Completed",
+        "Cancelled",
+      ],
       default: "Pending",
     },
   },
