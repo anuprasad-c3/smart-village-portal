@@ -17,12 +17,7 @@ router.get("/", authMiddleware, getProfile);
 // Update Profile
 router.put("/", authMiddleware, updateProfile);
 // Upload Profile Photo
-router.put(
-  "/photo",
-  authMiddleware,
-  upload.single("profileImage"),
-  uploadProfilePhoto
-);
+router.post( "/photo",authMiddleware,upload.single("profileImage"),uploadProfilePhoto );
 
 // Change Password
 router.put("/password", authMiddleware, changePassword);

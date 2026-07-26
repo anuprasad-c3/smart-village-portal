@@ -7,6 +7,7 @@ import {
   FiClock,
   FiCheckCircle,
   FiXCircle,
+  FiCalendar,
 } from "react-icons/fi";
 import PageLayout from "../../components/layout/PageLayout";
 import StatCard from "../../components/ui/StatCard";
@@ -33,7 +34,9 @@ function AdminDashboardContent() {
       <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="mt-2 text-gray-500">Overview of the Smart Panchayat portal</p>
+          <p className="mt-2 text-gray-500">
+            Overview of the Smart Panchayat portal
+          </p>
         </div>
 
         {loading ? (
@@ -43,24 +46,63 @@ function AdminDashboardContent() {
         ) : (
           <>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              <StatCard title="Total Citizens" value={stats?.totalUsers ?? 0} icon={FiUsers} color="purple" />
-              <StatCard title="Total Schemes" value={stats?.totalSchemes ?? 0} icon={FiLayers} color="blue" />
-              <StatCard title="Total Applications" value={stats?.totalApplications ?? 0} icon={FiFileText} color="green" />
-              <StatCard title="Pending" value={stats?.pending ?? 0} icon={FiClock} color="yellow" />
-              <StatCard title="Approved" value={stats?.approved ?? 0} icon={FiCheckCircle} color="green" />
-              <StatCard title="Rejected" value={stats?.rejected ?? 0} icon={FiXCircle} color="red" />
+              <StatCard
+                title="Total Citizens"
+                value={stats?.totalUsers ?? 0}
+                icon={FiUsers}
+                color="purple"
+              />
+              <StatCard
+                title="Total Schemes"
+                value={stats?.totalSchemes ?? 0}
+                icon={FiLayers}
+                color="blue"
+              />
+              <StatCard
+                title="Total Applications"
+                value={stats?.totalApplications ?? 0}
+                icon={FiFileText}
+                color="green"
+              />
+              <StatCard
+                title="Pending"
+                value={stats?.pending ?? 0}
+                icon={FiClock}
+                color="yellow"
+              />
+              <StatCard
+                title="Approved"
+                value={stats?.approved ?? 0}
+                icon={FiCheckCircle}
+                color="green"
+              />
+              <StatCard
+                title="Rejected"
+                value={stats?.rejected ?? 0}
+                icon={FiXCircle}
+                color="red"
+              />
             </div>
 
             <div className="mt-10 flex flex-wrap gap-4">
               <Link to="/admin/schemes">
                 <Button>Manage Schemes</Button>
+              </Link>
+              <Link to="/admin/updates">
+                <Button variant="outline">
+                  <FiBell className="mr-2" />
+                  Manage Updates
+                </Button>
                 </Link>
-                 <Link to="/admin/updates">
-    <Button variant="outline">
-      <FiBell className="mr-2" />
-      Manage Updates
-    </Button>
-  </Link>
+              <Link to="/admin/appointments">
+                <Button variant="outline">Manage Appointments</Button>
+              </Link>
+              <Link to="/admin/slots">
+                <Button variant="outline">
+                  <FiCalendar className="mr-2" />
+                  Manage Slots
+                </Button>
+              </Link>
               <Link to="/admin/applications">
                 <Button variant="outline">Review Applications</Button>
               </Link>

@@ -8,6 +8,7 @@ const {
   createSlot,
   getAvailableSlots,
   getAllSlots,
+  updateSlotAvailability,
 } = require("../controllers/slotController");
 
 // Citizen
@@ -21,6 +22,13 @@ router.get(
   authMiddleware,
   adminMiddleware,
   getAllSlots
+);
+
+router.patch(
+  "/:id/availability",
+  authMiddleware,
+  adminMiddleware,
+  updateSlotAvailability
 );
 
 module.exports = router;

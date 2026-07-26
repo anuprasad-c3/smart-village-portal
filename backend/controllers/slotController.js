@@ -130,8 +130,31 @@ const getAllSlots = async (req, res) => {
   }
 };
 
+const updateSlotAvailability = async (req, res) => {
+  try {
+    const { isActive } = req.body;
+    if (typeof isActive !== "boolean") {
+      return res.status(400).json({ success: false, message: "isActive must be a boolean" });
+    }
+
+    const slot = await Slot.findByIdAndUpdate(req.params.id, { isActive }, { new: true });
+    if (!slot) {
+      return res.status(404).json({ success: false, message: "Slot not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Slot ${isActive ? "opened" : "closed"} successfully`,
+      slot,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   createSlot,
   getAvailableSlots,
   getAllSlots,
+  updateSlotAvailability,
 };

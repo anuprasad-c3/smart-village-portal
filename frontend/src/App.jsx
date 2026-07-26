@@ -19,6 +19,9 @@ import LocalHelp from "./pages/LocalHelp";
 import NotFound from "./pages/NotFound";
 import Updates from "./pages/Updates";
 import ManageUpdates from "./pages/admin/ManageUpdate";
+import AppointmentBooking from "./pages/AppointmentBooking";
+import AppointmentManagement from "./pages/admin/AppointmentManagement";
+import SlotManagement from "./pages/admin/SlotManagement";
 
 function App() {
   return (
@@ -37,16 +40,16 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/schemes" element={<ManageSchemes />} />
-            <Route
-              path="/admin/applications"
-              element={<ManageApplications />}
-            />
+            <Route path="/admin/applications" element={<ManageApplications />}/>
             <Route path="/help" element={<LocalHelp />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/updates" element={<Updates />} />
-
             <Route path="/admin/updates" element={<ManageUpdates />} />
+            <Route path="/appointments/book" element={<AppointmentBooking />} />
+            <Route path="/admin/appointments" element={<AppointmentManagement />}/>
+            <Route path="/admin/slots" element={<SlotManagement />} />
           </Routes>
+          
           <Toaster position="top-right" />
         </BrowserRouter>
       </LanguageProvider>
