@@ -7,7 +7,6 @@ const applicationSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-
     scheme: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Scheme",
