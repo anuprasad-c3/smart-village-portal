@@ -35,7 +35,6 @@ function ApplySchemeForm() {
       toast.error(`Maximum ${MAX_FILES} files allowed`);
       return;
     }
-
     for (const file of selected) {
       if (!ALLOWED_TYPES.includes(file.type)) {
         toast.error(`${file.name}: Only PDF, JPG, and PNG allowed`);
