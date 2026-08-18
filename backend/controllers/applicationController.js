@@ -3,7 +3,7 @@ const Scheme = require("../models/Scheme");
 const fs = require("fs");
 const path = require("path");
 
-// Citizen Apply for Scheme
+// Citizen Apply Scheme
 const applyScheme = async (req, res) => {
   try {
     const { scheme } = req.body;
