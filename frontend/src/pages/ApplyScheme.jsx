@@ -83,7 +83,6 @@ function ApplySchemeForm() {
       </PageLayout>
     );
   }
-
   if (!scheme) {
     return (
       <PageLayout>
