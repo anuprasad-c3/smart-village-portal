@@ -26,7 +26,6 @@ function Hero() {
     }
   };
 
-  // Stats data - replace with actual data from your backend
   const stats = [
     { icon: FiUsers, value: "12,500+", label: "Registered Citizens" },
     { icon: FiShield, value: "98%", label: "Scheme Coverage" },
