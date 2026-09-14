@@ -49,8 +49,10 @@ function App() {
             <Route path="/admin/appointments" element={<AppointmentManagement />}/>
             <Route path="/admin/slots" element={<SlotManagement />} />
           </Routes>
-          
-          <Toaster position="top-right" />
+          <Toaster 
+            position="top-right" 
+            toastOptions={{ duration: 4000 }} 
+          />
         </BrowserRouter>
       </LanguageProvider>
     </AuthProvider>
