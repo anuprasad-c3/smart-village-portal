@@ -34,21 +34,8 @@ function AppointmentBooking() {
 };
 
 useEffect(() => {
-  const loadInitialData = async () => {
-    try {
-      const [slotsResponse, appointmentsResponse] = await Promise.all([
-        appointmentService.getAvailableSlots(),
-        appointmentService.getMyAppointments(),
-      ]);
-      setSlots(slotsResponse.slots ?? []);
-      setAppointments(appointmentsResponse.appointments ?? []);
-    } catch (error) {
-      console.error(error);
-      toast.error(error.response?.data?.message || "Unable to load appointments");
-    }
-  };
-
-  loadInitialData();
+  loadSlots();
+  loadAppointments();
 }, []);
 
   const handleBook = async () => {
