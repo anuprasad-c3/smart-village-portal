@@ -26,18 +26,7 @@ function SlotManagementContent() {
   };
 
   useEffect(() => {
-    const fetchSlots = async () => {
-      try {
-        const data = await appointmentService.getAllSlots();
-        setSlots(data.slots ?? []);
-      } catch (error) {
-        toast.error(error.response?.data?.message || "Failed to load slots");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSlots();
+    loadSlots();
   }, []);
 
   const handleChange = ({ target: { name, value } }) => setForm((current) => ({ ...current, [name]: value }));
