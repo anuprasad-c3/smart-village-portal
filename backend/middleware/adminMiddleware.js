@@ -6,7 +6,6 @@ const adminMiddleware = (req, res, next) => {
             message: "Access Denied. Admins only."
         });
     }
-
     next();
 }
 
