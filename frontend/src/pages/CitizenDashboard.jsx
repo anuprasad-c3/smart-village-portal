@@ -10,6 +10,7 @@ import {
   FiBell,
   FiUser,
   FiChevronRight,
+  FiHelpCircle,
 } from "react-icons/fi";
 import PageLayout from "../components/layout/PageLayout";
 import StatCard from "../components/ui/StatCard";
@@ -84,6 +85,12 @@ function CitizenDashboardContent() {
       icon: FiUser,
       link: "/profile",
       color: "text-indigo-600 bg-indigo-50",
+    },
+    {
+      title: "Help & Support",
+      icon: FiHelpCircle,
+      link: "/help",
+      color: "text-teal-600 bg-teal-50",
     },
   ];
 
