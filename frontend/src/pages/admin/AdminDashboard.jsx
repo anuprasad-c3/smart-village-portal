@@ -95,7 +95,10 @@ function AdminDashboardContent() {
                 </Button>
                 </Link>
               <Link to="/admin/appointments">
-                <Button variant="outline">Manage Appointments</Button>
+                <Button variant="outline">
+                  <FiClock className="mr-2 inline" />
+                  Manage Appointments
+                </Button>
               </Link>
               <Link to="/admin/slots">
                 <Button variant="outline">
